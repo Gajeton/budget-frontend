@@ -1,6 +1,6 @@
-interface CategorieIncome {
+interface CategoryIncome {
   id: number
-  test: string
+  title: string
   createdAt: Date
   updatedAt: Date
   creator: User

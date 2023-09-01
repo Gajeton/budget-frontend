@@ -1,39 +1,37 @@
 import AdminSkeleton from "../../../components/Admin/AdminSkeleton";
 import AdminList from "../AdminList/AdminList";
 
-import { useAxios } from "../../../utils/axios-utils";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 
 
 
 function AdminExpense() {
   const [data, setData] = useState<any>(null);
-  const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
 
+  const { user } = useAuth0()
+
 
   useEffect(() => {
-    axios
-      .get(import.meta.env.VITE_API_URL + "categorieExpense/getCategorieExpenses/" + 1)
-      .then((response) => setData(response.data))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoaded(true));
+    if (user) {
+      axios
+        .get(import.meta.env.VITE_API_URL + "categoryExpense/getCategoryExpenses/" + user.sub)
+        .then((response) => setData(response.data))
+        .catch((error) => setError(error.message))
+        .finally(() => setLoaded(true));
+    }
+
   }, []);
 
-  const handelPost = () => {
-    axios
-      .post(import.meta.env.VITE_API_URL + "categorieExpense/createCategorieExpense/", { title: title })
-      .then((response) => setData([...data, response.data]))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoaded(true));
-  }
+
 
   const handelDelete = (deleteId: number) => {
     axios
-      .delete(import.meta.env.VITE_API_URL + "categorieExpense/deleteCategorieExpense/" + deleteId)
+      .delete(import.meta.env.VITE_API_URL + "categoryExpense/deleteCategoryExpense/" + deleteId)
       .then((response) => setData(data.filter((a: { id: any; }) =>
         a.id !== response.data.id
       )))
@@ -41,9 +39,6 @@ function AdminExpense() {
       .finally(() => setLoaded(true));
   }
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
-  }
 
 
 
@@ -54,8 +49,9 @@ function AdminExpense() {
       <>
         <AdminList data={data} handleDeleteFunction={handelDelete} />
         <AdminSkeleton
-          handleAddFunction={handelPost}
-          handleInputFunction={handleInputChange}
+          setData={setData}
+          data={data}
+          url="categoryExpense/createCategoryExpense/"
           inputLabel="test"
           buttonLabel="Add an expense category"
         />

@@ -9,7 +9,6 @@ function TravelPeriodTabs() {
 
   return (
     <>
-
       <div className=" flex flex-col w-full mt-2 bg-[#91C8E4] border-gray-300 border rounded-sm">
         <div className="grid grid-cols-3 text-center h-10 text-lg items-center">
           <NavLink to="month" className={navLinkCssClasses}>

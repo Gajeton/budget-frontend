@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom";
 
-interface CardMonthProps {
-    keyItem: string
+interface CardMonthItemrops {
+    keyItem: string,
+    title:string
 }
 
-const CardMonthItem = ({keyItem} : CardMonthProps) => {
+const CardMonthItem = ({keyItem, title} : CardMonthItemrops) => {
 
     return (
       <NavLink to={`${1}`} state={{id : 1}} className="bg-[#F6F4EB] border border-gray-300 rounded-sm hover:bg-[#91C8E4] p-6" key={keyItem}>
         <div className="flex justify-between w-full items-center">
-          <h1 className="text-2xl">January</h1>
+          <h1 className="text-2xl">{}</h1>
           <div className="flex flex-col">
             <h2>Nb of expenses : 20</h2>
             <h2>Nb of incomes : 2</h2>

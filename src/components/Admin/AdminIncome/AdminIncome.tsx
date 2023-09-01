@@ -1,34 +1,31 @@
-import { useEffect, useState } from "react";
-import AdminSkeleton from "../../../components/Admin/AdminSkeleton";
-import { useAxios } from "../../../utils/axios-utils";
-import AdminList from "../AdminList/AdminList";
 import axios from "axios";
+import { ChangeEvent, useEffect, useState } from "react";
+import AdminSkeleton from "../../../components/Admin/AdminSkeleton";
+import AdminList from "../AdminList/AdminList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function AdminIncome() {
   const [data, setData] = useState<any>(null);;
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
 
+  const { user } = useAuth0()
 
   useEffect(() => {
+    if (user) {
     axios
-      .get(import.meta.env.VITE_API_URL + "categorieIncome/getCategorieIncomes/" + 1)
+      .get(import.meta.env.VITE_API_URL + "categoryIncome/getCategoryIncomes/" + user.sub)
       .then((response) => setData(response.data))
       .catch((error) => setError(error.message))
       .finally(() => setLoaded(true));
+    }
   }, []);
 
-  const handelPost = () => {
-    axios
-      .post(import.meta.env.VITE_API_URL + "categorieIncome/deleteCategorieIncome/", { test: 'fwefwefewf' })
-      .then((response) => setData([...data, response.data]))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoaded(true));
-  }
+
 
   const handelDelete = (deleteId: number) => {
     axios
-      .delete(import.meta.env.VITE_API_URL + "categorieIncome/deleteCategorieIncome/" + deleteId)
+      .delete(import.meta.env.VITE_API_URL + "categoryIncome/deleteCategoryIncome/" + deleteId)
       .then((response) => setData(data.filter((a: { id: any; }) =>
         a.id !== response.data.id
       )))
@@ -45,7 +42,9 @@ function AdminIncome() {
       <>
         <AdminList data={data} handleDeleteFunction={handelDelete} />
         <AdminSkeleton
-          handleAddFunction={handelPost}
+          setData={setData}
+          data={data}
+          url="categoryIncome/createCategoryIncome/"
           inputLabel="test"
           buttonLabel="Add an income category"
         />

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AdminSkeleton from "../AdminSkeleton";
 import axios from "axios";
 import AdminList from "../AdminList/AdminList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 function AdminDestination() {
@@ -9,22 +10,19 @@ function AdminDestination() {
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
 
+  const { user } = useAuth0()
 
   useEffect(() => {
-    axios
-      .get(import.meta.env.VITE_API_URL + "destination/getDestinations/" + 1)
-      .then((response) => setData(response.data))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoaded(true));
+
+    if (user) {
+      axios.get(import.meta.env.VITE_API_URL + "destination/getDestinations/" + user.sub)
+        .then((response) => setData(response.data))
+        .catch((error) => setError(error.message))
+        .finally(() => setLoaded(true));
+    }
   }, []);
 
-  const handelPost = () => {
-    axios
-      .post(import.meta.env.VITE_API_URL + "destination/createDestination/", { test: 'fwefwefewf' })
-      .then((response) => setData([...data, response.data]))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoaded(true));
-  }
+
 
   const handelDelete = (deleteId: number) => {
     axios
@@ -43,16 +41,18 @@ function AdminDestination() {
       <>
         <AdminList data={data} handleDeleteFunction={handelDelete} />
         <AdminSkeleton
-          handleAddFunction={handelPost}
+          setData={setData}
+          data={data}
+          url="destination/createDestination/"
           inputLabel="test"
-          buttonLabel="Add an destination"
+          buttonLabel="Add a destination"
         />
       </>
     );
   }
   return <span>Loading...</span>;
 
- 
+
 }
 export default AdminDestination;
 

@@ -1,6 +1,6 @@
-interface CategorieExpense {
+interface CategoryExpense {
   id: number
-  test: string
+  title: string
   createdAt: Date
   updatedAt: Date
   creator: User
