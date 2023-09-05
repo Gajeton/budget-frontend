@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { AxiosContext } from "../components/AxiosInstanceProvider";
+import { AxiosContext } from "../components/axios-instance-provider";
 
 export const useAxios = (url: string, method: string, payload: any) => {
     const [data, setData] = useState<any>(null);
