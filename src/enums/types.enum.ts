@@ -21,6 +21,7 @@ export interface FormDataExpenseProps {
   currency: Currency | null,
   amount : number,
   date: Moment
+
 }
 
 export interface CreateEntryProps {
@@ -43,6 +44,8 @@ export interface FormDataProps {
     startDate: Moment
     endDate: Moment
     budget: number
+    categoryExpense? : CategoryExpense[] 
+    categoryIncome? : CategoryIncome []
   }
   
   export interface CreateTravelProps {
@@ -50,6 +53,8 @@ export interface FormDataProps {
     budget: number
     idAuth0: string
     currencyId: number
+    categoryExpenseId : number[]
+    categoryIncomeId : number[]
     startDate : Moment
     endDate: Moment
     month : number

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface CustomSearchableSelectProps {
   options: any[];
@@ -17,7 +17,24 @@ export const CustomSearchableSelect = ({
 }: CustomSearchableSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Add event listener to the document body to handle clicks outside the dropdown
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => {
+      // Remove the event listener when the component unmounts
+      document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+  
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -37,7 +54,7 @@ export const CustomSearchableSelect = ({
   );
 
   return (
-    <div className="z-10">
+    <div className="z-10" >
       <div
         onClick={toggleDropdown}
         className="cursor-pointer px-4 py-2 border border-gray-300 rounded-md flex items-center justify-between"

@@ -8,14 +8,18 @@ interface BudgetDetailExpenseItemProps {
     categoryId: number;
     categoryName : string
     travelId:number
-    
-
 }
 
-interface BudgetDetailExpenseItemData {
-    totalExpense: number;
-    totalEstimated : number;
-    balance: number;
+
+
+export interface BudgetDetailExpenseItemData {
+    data: {
+        categoryExpenseId: number,
+        travelId: number,
+        categoryTitle: string,
+        entrysAmount: number
+    }
+    count: number
 }
 
 
@@ -27,17 +31,16 @@ const BudgetDetailExpenseItem = ({ categoryId, categoryName, travelId }: BudgetD
 
     const { user } = useAuth0();
 
-    // useEffect(() => {
-    //     if (user) {
-    //         axios.get(import.meta.env.VITE_API_URL + "entry/getEntryByTravelIdAndCategoryId/" + user.sub ,
-    //         { categoryId : categoryId , travelId : travelId })
-    //           .then((response) => setData(response.data))
-    //           .catch((error) => setError(error.message))
-    //           .finally(() => setLoaded(true));
-    //       }
-    //   }, []);
+    useEffect(() => {
+        if (user) {
+            axios.get(import.meta.env.VITE_API_URL + "entry/getEntryByCategoryExpenseAndTravelId/" + categoryId + "/" + travelId)
+              .then((response) => setData(response.data))
+              .catch((error) => setError(error.message))
+              .finally(() => setLoaded(true));
+          }
+      }, []);
 
-      if (loaded) {
+      if (loaded && data) {
         return error ? (
           <span>Error: {error}</span>
         ) : (
@@ -45,15 +48,15 @@ const BudgetDetailExpenseItem = ({ categoryId, categoryName, travelId }: BudgetD
            <td className="px-4 py-4 text-sm  whitespace-nowrap">
                 {categoryName}
             </td>
-            {/* <td className="px-4 py-4 text-sm  whitespace-nowrap">
-                {data.totalExpense}
+            <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                {data.data.entrysAmount}
             </td>
             <td className="px-4 py-4 text-sm  whitespace-nowrap">
-                {data.totalEstimated}
+                {data.count}
             </td>
             <td className="px-4 py-4 text-sm  whitespace-nowrap">
-                {data.balance}
-            </td> */}
+       
+            </td>
             <td className="px-4 py-4 text-sm  whitespace-nowrap">
                 <NavLink className="flex justify-center"
                     state={{ categorieId : categoryId, travelId : travelId  }}

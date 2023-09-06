@@ -12,10 +12,12 @@ interface TravelCardHomeProps {
   destination: string,
   startDate: Moment,
   endDate: Moment,
-  id: number
+  id: number,
+  totalExpense: number,
+  totalIncome: number
 }
 
-export const TravelCardHome = ({ destination, startDate, endDate, id } :TravelCardHomeProps) => {
+export const TravelCardHome = ({ destination, startDate, endDate, id, totalExpense, totalIncome } :TravelCardHomeProps) => {
     const { isAuthenticated } = useAuth0();
 
     return (
@@ -46,9 +48,11 @@ export const TravelCardHome = ({ destination, startDate, endDate, id } :TravelCa
                         </div>
                     </div>
                     <div className="flex min-w-0 gap-x-6 items-center  ">
-                        <p>Nb expenses: 30</p>
+                        <p>Total expense : {totalExpense}</p>
                     </div>
-
+                    <div className="flex min-w-0 gap-x-6 items-center  ">
+                        <p>Total incomes : {totalIncome}</p>
+                    </div>
                     <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                         <ProgressBarCircular percentage={50} />
                     </div>

@@ -8,11 +8,15 @@ import { CreateTravelProps, FormDataProps } from "../../enums/types.enum";
 import { CustomSearchableSelect } from "../custom-searchable-select";
 import { InputWithMoment } from "../input-with-moment";
 import { Currency } from "../../models/currency.model";
+import { MultiSelectInput } from "../multi-select-input";
+
 
 
 const initTravel = () => {
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [currency, setCurrencies] = useState<Currency[]>([]);
+  const [categoryExpense, setCategoryExpense] = useState<CategoryExpense[]>([]);
+  const [categoryIncome, setCategoryIncome] = useState<CategoryIncome[]>([]);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [symbol, setSymbol] = useState("");
@@ -24,7 +28,8 @@ const initTravel = () => {
   const navigate = useNavigate();
   return {
     destinations, setDestinations, error, setError, loaded, setLoaded, symbol, setSymbol, exchangeRate, setExchangeRate, user: { user },
-    selectedCurrency, setSelectedCurrency, currency, navigate, formRef, disabled , setDisabled , setCurrencies
+    selectedCurrency, setSelectedCurrency, currency, navigate, formRef, disabled , setDisabled , setCurrencies, categoryExpense, setCategoryExpense,
+    categoryIncome, setCategoryIncome
   }
 }
 
@@ -33,8 +38,9 @@ export const AddTravelModal = () => {
 
   const {
     destinations, setDestinations, error, setError, loaded, setLoaded, setExchangeRate, user: { user },
-    selectedCurrency, currency, navigate, formRef, disabled , setDisabled, setCurrencies} = initTravel();
+    selectedCurrency, currency, navigate, formRef, disabled , setDisabled, setCurrencies, categoryExpense, setCategoryExpense, categoryIncome, setCategoryIncome} = initTravel();
   const [globalError, setGlobalError] = useState("");
+ 
   const onDismiss = () => {
     navigate(-1);
   }
@@ -45,7 +51,9 @@ export const AddTravelModal = () => {
     title: '',
     startDate: moment(),
     endDate: moment(),
-    budget: 0
+    budget: 0,
+    categoryExpense: [],
+    categoryIncome: []
   });
 
   const [errors, setErrors] = useState({
@@ -54,7 +62,9 @@ export const AddTravelModal = () => {
     title: '',
     startDate: '',
     endDate: '',
-    budget: ''
+    budget: '',
+    categoryExpense:'',
+    categoryIncome: ''
   });
 
 
@@ -92,7 +102,9 @@ export const AddTravelModal = () => {
       title: '',
       startDate: '',
       endDate: '',
-      budget: ''
+      budget: '',
+      categoryIncome:'',
+      categoryExpense:''
     };
     // Validation logic
     if (formData.title.trim() === '') {
@@ -128,15 +140,23 @@ export const AddTravelModal = () => {
 
   const handleSubmit = (e : any) => {
     e.preventDefault();
-    if (validateForm() && globalError === "" && formData.destination && user && user.sub && formData.currency) {
+    if (validateForm() && globalError === "" && formData.destination && user && user.sub && formData.currency 
+    && formData.categoryExpense && formData.categoryIncome) {
       if(formData.endDate && formData.startDate) {
         const numberOfMonths = formData.endDate.diff(formData.startDate, 'months');
         const numberOfWeek = formData.endDate.diff(formData.startDate, 'weeks');
         const numberOfday = formData.endDate.diff(formData.startDate, 'days');
-
+        let expense = []
+        let income = []
+        income = formData.categoryIncome.map(res => {return res.id})
+        expense = formData.categoryExpense.map(res => {return res.id})
+        console.log(income)
+        console.log(expense)
         const postItem : CreateTravelProps = { month :  numberOfMonths , day : numberOfday, 
         week: numberOfWeek, destinationId: formData.destination.id , startDate : formData.startDate, endDate: formData.endDate,
-        idAuth0 : user.sub, currencyId: formData.currency.id , budget : formData.budget}
+        idAuth0 : user.sub, currencyId: formData.currency.id , budget : formData.budget, categoryExpenseId : expense, 
+        categoryIncomeId : income}
+        
         axios
         .post(import.meta.env.VITE_API_URL + 'travel/createTravel', postItem)
         .then((response) => console.log(response))
@@ -148,11 +168,24 @@ export const AddTravelModal = () => {
 
   useEffect(() => {
     if (user) {
-      axios
+        axios
         .get(import.meta.env.VITE_API_URL + "destination/getDestinations/" + user.sub)
         .then((response) => setDestinations(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));
+
+        axios
+        .get(import.meta.env.VITE_API_URL + "categoryExpense/getCategoryExpenses/" + user.sub)
+        .then((response) => setCategoryExpense(response.data))
+        .catch((error) => setError(error.message))
+        .finally(() => setLoaded(true));
+
+        axios
+        .get(import.meta.env.VITE_API_URL + "categoryIncome/getCategoryIncomes/" + user.sub)
+        .then((response) => setCategoryIncome(response.data))
+        .catch((error) => setError(error.message))
+        .finally(() => setLoaded(true));
+
 
         axios
         .get(import.meta.env.VITE_API_URL + "currency/getCurrencies")
@@ -250,6 +283,34 @@ export const AddTravelModal = () => {
                       onChange={handleChange}
                     />
                   </div>
+                  <span className="text-red-200">{errors.title}</span>
+              </div>
+              <div className="flex flex-col">
+                  <label >
+                    Category expense
+                  </label>
+                  <MultiSelectInput selectedValues={formData.categoryExpense!}
+                    options={categoryExpense}
+                    onSelect={(categoryExpense : CategoryExpense[]) => {
+                      handleDataChild(categoryExpense, 'categoryExpense')
+                    }}
+                    placeholder="Select an option"
+                    name="selectedOption" // Name corresponds to the field in formData
+                  />
+                  <span className="text-red-200">{errors.title}</span>
+              </div>
+              <div className="flex flex-col">
+                  <label >
+                    Category income
+                  </label>
+                  <MultiSelectInput selectedValues={formData.categoryIncome!}
+                    options={categoryIncome}
+                    onSelect={(categoryIncome : CategoryIncome[]) => {
+                      handleDataChild(categoryIncome, 'categoryIncome')
+                    }}
+                    placeholder="Select an option"
+                    name="selectedOption" // Name corresponds to the field in formData
+                  />
                   <span className="text-red-200">{errors.title}</span>
               </div>
             </div>

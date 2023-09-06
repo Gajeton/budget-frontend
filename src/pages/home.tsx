@@ -37,7 +37,7 @@ function Home() {
           </div>
           <CardTitle navigateUrl="." title="My travels" />
           {data.map(res => {
-            return <TravelCardHome id={res.id} destination={res.destination[0]} startDate={res.startDate} endDate={res.endDate}/>
+            return <TravelCardHome id={res.id} destination={res.destination[0]} startDate={res.startDate} endDate={res.endDate} totalExpense={10} totalIncome={10}/>
           })}
 
           <Link
