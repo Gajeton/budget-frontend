@@ -16,7 +16,6 @@ import AddIncomeModal from "../components/Modals/add-income.modal";
 import Home from "../pages/home";
 import MonthDetail from "../pages/MonthDetail/month-detail";
 import Travel from "../pages/Travel/travel";
-import { AuthenticationGuard } from "../components/authentication-guard";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PageLoader } from "../pages/page-loader";
 import { Presentation } from "../pages/presentation";
@@ -24,6 +23,7 @@ import { AdminDestination } from "../components/Admin/AdminDestination/admin-des
 import { AdminExpense } from "../components/Admin/AdmineExpense/admin-expense";
 import { AdminIncome } from "../components/Admin/AdminIncome/admin-income";
 import WeekDetail from "../pages/WeekDetail/week-detail";
+import { AuthenticationGuard } from "../components/auth/authentication-guard";
 
 function Router() {
 
@@ -48,7 +48,7 @@ function Router() {
           </Route>
           <Route path="/home/travel">
             <Route path=":id" element={<Travel />}>
-              <Route index element={<Navigate to="month" />} />
+              <Route index element={<Navigate to="week" />} />
               <Route index path="month" element={<CardMonth />} />
               <Route path="week" element={<CardWeek />} />
               <Route path="day" element={<CardDay />} />

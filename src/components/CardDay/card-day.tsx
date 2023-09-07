@@ -1,10 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { Moment } from "moment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CardDayItem from "./card-day-items";
 import { TravelDay } from "../../enums/types.enum";
+import CardDayItem from "./card-day-items";
 
 
 

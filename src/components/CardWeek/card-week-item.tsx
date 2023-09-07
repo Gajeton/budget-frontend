@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 
+interface CardWeekItem { id: number, week: number, start: string, end: string, travelId : number }
 
-export const CardWeekItem = ({ id, week, start, end, travelId }: { id: number, week: number, start: string, end: string, travelId : number }) => {
+export const CardWeekItem = ({ id, week, start, end, travelId }: CardWeekItem) => {
 
     return (
         <NavLink to={`${id}`} state={{travelId : travelId}} className="w-full p-4 flex-col justify-between items-center hover:bg-[#91C8E4] bg-[#F6F4EB] border border-gray-300 rounded-sm text-base">

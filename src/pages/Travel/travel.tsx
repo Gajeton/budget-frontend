@@ -7,7 +7,7 @@ import './travel.css';
 import { TravelPeriodTabs } from "../../components/TravelPeriodTabs/travel-period-tabs";
 
 function Travel() {
-  const [data, setData] = useState<Travel>();;
+  const [data, setData] = useState<any>();;
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
   const { id } = useParams();
@@ -19,7 +19,7 @@ function Travel() {
       axios.get(import.meta.env.VITE_API_URL + "travel/getTravelById/" + id + "/" + user.sub)
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
-        .finally(() => setLoaded(true));
+        .finally(() => { setLoaded(true), console.log(data)});
     }
   }, []);
 
@@ -29,7 +29,7 @@ function Travel() {
     ) : (
       <>
         <div className="mt-4 w-4/5">
-          <TravelCard day={data.day} budget={data.budget} />
+          <TravelCard id={data.id} day={parseInt(data.day)} startDate={data.startDate} endDate={data.endDate} budget={parseFloat(data.budget)} totalBudget={parseInt(data.totalBudget)}/>
           <TravelPeriodTabs />
         </div>
       </>

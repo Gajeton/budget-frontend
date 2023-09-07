@@ -1,14 +1,12 @@
 import moment, { Moment } from "moment";
 import { NavLink } from "react-router-dom";
 
-interface CardMonthProps {
-    keyItem: string
-}
+interface CardDayItemProps { id: number, day: string, startDate: Moment, index: number }
 
-export const CardDayItem = ({id, day, startDate, index} : {id : number , day : string, startDate : Moment, index : number}) => {
+export const CardDayItem = ({ id, day, startDate, index }: CardDayItemProps) => {
     const date = moment(startDate).add(index, 'days').format("DD-MM-YYYY")
     return (
-        <NavLink to={`${id}`}className="w-full p-1 flex justify-between items-center hover:bg-[#91C8E4] bg-[#F6F4EB] border border-gray-300 rounded-sm">
+        <NavLink to={`${id}`} className="w-full p-1 flex justify-between items-center hover:bg-[#91C8E4] bg-[#F6F4EB] border border-gray-300 rounded-sm">
             <div>
                 <h1 className=" text-lg">{(day)} {date.toString()}</h1>
                 <h2>Balance incomes/expenses<span> 0</span></h2>

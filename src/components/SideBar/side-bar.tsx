@@ -6,18 +6,11 @@ import { IoIosPaperPlane } from "react-icons/io";
 import { RiMoneyEuroCircleFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 
-interface SidebarItemProps {
-  index: number;
-}
-
 export const  Sidebar = () => {
-
   const [open, setOpen] = useState(true);
-  const [tooltipUser, settooltipUser] = useState(false);
   const { isAuthenticated } = useAuth0();
   const { loginWithRedirect } = useAuth0();
   const { user } = useAuth0();
-
 
   const { logout } = useAuth0();
 
@@ -155,7 +148,7 @@ export const  Sidebar = () => {
         </ul>
       </div>
       <div className="pt-2 flex justify-center flex-col mt-auto">
-        {isAuthenticated && (
+        {isAuthenticated && user && (
           <div className="flex items-center gap-4 py-6 px-1 border-t-2 border-t-black">
             <div className="realtive flex group">
 
@@ -181,7 +174,6 @@ export const  Sidebar = () => {
           </div>
         )}
 
-
         {!isAuthenticated && (
           <div className="text-lg flex justify-between mb-3 px-2 w-full">
             <button className="hover:bg-[#91C8E4] rounded-sm p-1" onClick={handleLogin}>
@@ -192,7 +184,6 @@ export const  Sidebar = () => {
             </button>
           </div>
         )}
-
       </div>
     </nav>
   );

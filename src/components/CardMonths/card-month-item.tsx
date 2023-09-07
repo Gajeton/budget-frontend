@@ -1,9 +1,9 @@
 import { Moment } from "moment";
 import { NavLink } from "react-router-dom";
 
+interface CardMonthItemProps {id : number , month : string}
 
-
-export const CardMonthItem = ( {id, month} : {id : number , month : string}) => {
+export const CardMonthItem = ( {id, month} : CardMonthItemProps) => {
     
     return (
       <NavLink to={`${id}`} className="bg-[#F6F4EB] border border-gray-300 rounded-sm hover:bg-[#91C8E4] p-6" key={id}>

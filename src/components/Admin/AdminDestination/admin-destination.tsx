@@ -6,7 +6,7 @@ import { AdminSkeleton } from "../admin-skeleton";
 
 
 export const AdminDestination = () => {
-  const [data, setData] = useState<any>(null);;
+  const [data, setData] = useState<Destination[]>([]);;
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
 

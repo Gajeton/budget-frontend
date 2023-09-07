@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 
 interface CustomMultiSelectProps {
-  options: any[]; // An array of available options
-  selectedValues: any[]; // An array of selected options
-  onSelect: (selectedValues: any[]) => void; // Callback to handle selection
+  options: any[];
+  selectedValues: any[]; 
+  onSelect: (selectedValues: any[]) => void; 
   placeholder: string;
   name: string;
 }
@@ -13,7 +13,6 @@ export const MultiSelectInput = ({
   selectedValues,
   onSelect,
   placeholder,
-  name,
 }: CustomMultiSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');

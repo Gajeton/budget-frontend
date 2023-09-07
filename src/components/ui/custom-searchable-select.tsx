@@ -3,8 +3,8 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 interface CustomSearchableSelectProps {
   options: any[];
   placeholder: string;
-  selectedValue: any; // Value that corresponds to the selected option
-  onSelect: (selectedValue: any) => void; // Callback to handle selection
+  selectedValue: any;
+  onSelect: (selectedValue: any) => void;
   name: string;
 }
 
@@ -13,14 +13,12 @@ export const CustomSearchableSelect = ({
   placeholder,
   selectedValue,
   onSelect,
-  name,
 }: CustomSearchableSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Add event listener to the document body to handle clicks outside the dropdown
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -30,7 +28,6 @@ export const CustomSearchableSelect = ({
     document.body.addEventListener('click', handleClickOutside);
 
     return () => {
-      // Remove the event listener when the component unmounts
       document.body.removeEventListener('click', handleClickOutside);
     };
   }, []);
@@ -72,14 +69,14 @@ export const CustomSearchableSelect = ({
             type="text"
             placeholder="Search..."
             value={searchTerm}
-            onChange={handleSearchChange} // Fix the event handler here
+            onChange={handleSearchChange} 
             className="px-4 py-2 w-full border-b border-gray-300 focus:outline-none"
           />
           <ul>
             {filteredOptions.map((option) => (
               <li
                 key={option.id}
-                onClick={() => handleOptionSelect(option)} // Fix the event handler here
+                onClick={() => handleOptionSelect(option)}
                 className="px-4 py-2 cursor-pointer hover:bg-gray-100"
               >
                 {option.title}

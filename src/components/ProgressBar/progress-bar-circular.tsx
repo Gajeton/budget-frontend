@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 interface CircularProgressBarProps {
-    percentage: number; // Progress percentage (0-100)
-    strokeWidth?: number; // Width of the progress bar line
-    size?: number; // Diameter of the circular progress bar
+    percentage: number;
+    strokeWidth?: number;
+    size?: number;
 }
 
 export const ProgressBarCircular = ({
@@ -13,7 +13,6 @@ export const ProgressBarCircular = ({
 }: CircularProgressBarProps) => {
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (percentage / 100) * circumference;
 
     const [offsetValue, setOffsetValue] = useState(circumference);
 

@@ -8,54 +8,23 @@ interface BudgetDetailExpenseItemProps {
     categoryId: number;
     categoryName : string
     travelId:number
+    entrysAmount: number
+    countEntrys:number
 }
 
 
+const BudgetDetailExpenseItem = ({ categoryId, categoryName, travelId, entrysAmount, countEntrys }: BudgetDetailExpenseItemProps) => {
 
-export interface BudgetDetailExpenseItemData {
-    data: {
-        categoryExpenseId: number,
-        travelId: number,
-        categoryTitle: string,
-        entrysAmount: number
-    }
-    count: number
-}
-
-
-const BudgetDetailExpenseItem = ({ categoryId, categoryName, travelId }: BudgetDetailExpenseItemProps) => {
-    // const [pourcentage, setPourcentage] = useState((estimated/amount)*100);
-    const [data, setData] = useState<BudgetDetailExpenseItemData>()
-    const [loaded, setLoaded] = useState(true)
-    const [error, setError] = useState()
-
-    const { user } = useAuth0();
-
-    useEffect(() => {
-        if (user) {
-            axios.get(import.meta.env.VITE_API_URL + "entry/getEntryByCategoryExpenseAndTravelId/" + categoryId + "/" + travelId)
-              .then((response) => setData(response.data))
-              .catch((error) => setError(error.message))
-              .finally(() => setLoaded(true));
-          }
-      }, []);
-
-      if (loaded && data) {
-        return error ? (
-          <span>Error: {error}</span>
-        ) : (
+    return (
         <tr>
            <td className="px-4 py-4 text-sm  whitespace-nowrap">
                 {categoryName}
             </td>
             <td className="px-4 py-4 text-sm  whitespace-nowrap">
-                {data.data.entrysAmount}
+                {entrysAmount}
             </td>
             <td className="px-4 py-4 text-sm  whitespace-nowrap">
-                {data.count}
-            </td>
-            <td className="px-4 py-4 text-sm  whitespace-nowrap">
-       
+                {countEntrys}
             </td>
             <td className="px-4 py-4 text-sm  whitespace-nowrap">
                 <NavLink className="flex justify-center"
@@ -65,8 +34,6 @@ const BudgetDetailExpenseItem = ({ categoryId, categoryName, travelId }: BudgetD
             </td>
         </tr>
        );
-    }
-    return <span>Loading...</span>;
 
 }
 

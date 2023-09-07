@@ -1,45 +1,42 @@
-
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateTravelProps, FormDataProps } from "../../enums/types.enum";
-import { CustomSearchableSelect } from "../custom-searchable-select";
-import { InputWithMoment } from "../input-with-moment";
+import { CustomSearchableSelect } from "../ui/custom-searchable-select"; 
 import { Currency } from "../../models/currency.model";
-import { MultiSelectInput } from "../multi-select-input";
-
-
-
-const initTravel = () => {
-  const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [currency, setCurrencies] = useState<Currency[]>([]);
-  const [categoryExpense, setCategoryExpense] = useState<CategoryExpense[]>([]);
-  const [categoryIncome, setCategoryIncome] = useState<CategoryIncome[]>([]);
-  const [error, setError] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const [symbol, setSymbol] = useState("");
-  const [disabled, setDisabled] = useState(true);
-  const [exchangeRate, setExchangeRate] = useState<any>();
-  const { user } = useAuth0()
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-  const navigate = useNavigate();
-  return {
-    destinations, setDestinations, error, setError, loaded, setLoaded, symbol, setSymbol, exchangeRate, setExchangeRate, user: { user },
-    selectedCurrency, setSelectedCurrency, currency, navigate, formRef, disabled , setDisabled , setCurrencies, categoryExpense, setCategoryExpense,
-    categoryIncome, setCategoryIncome
-  }
-}
-
+import { MultiSelectInput } from "../ui/multi-select-input";
 
 export const AddTravelModal = () => {
 
+  const initTravel = () => {
+    const [destinations, setDestinations] = useState<Destination[]>([]);
+    const [currency, setCurrencies] = useState<Currency[]>([]);
+    const [categoryExpense, setCategoryExpense] = useState<CategoryExpense[]>([]);
+    const [categoryIncome, setCategoryIncome] = useState<CategoryIncome[]>([]);
+    const [error, setError] = useState("");
+    const [loaded, setLoaded] = useState(false);
+    const [symbol, setSymbol] = useState("");
+    const [disabled, setDisabled] = useState(true);
+    const [globalError, setGlobalError] = useState("");
+    const [exchangeRate, setExchangeRate] = useState<any>();
+    const { user } = useAuth0()
+    const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
+    const formRef = useRef<HTMLFormElement>(null);
+    const navigate = useNavigate();
+    return {
+      destinations, setDestinations, error, setError, loaded, setLoaded, symbol, setSymbol, exchangeRate, setExchangeRate, user: { user },
+      selectedCurrency, setSelectedCurrency, currency, navigate, formRef, disabled , setDisabled , setCurrencies, categoryExpense, setCategoryExpense,
+      categoryIncome, setCategoryIncome, globalError, setGlobalError
+    }
+  }
+
+
   const {
     destinations, setDestinations, error, setError, loaded, setLoaded, setExchangeRate, user: { user },
-    selectedCurrency, currency, navigate, formRef, disabled , setDisabled, setCurrencies, categoryExpense, setCategoryExpense, categoryIncome, setCategoryIncome} = initTravel();
-  const [globalError, setGlobalError] = useState("");
+    selectedCurrency, currency, navigate, formRef, disabled , setDisabled, setCurrencies, categoryExpense, setCategoryExpense, categoryIncome, setCategoryIncome, globalError, setGlobalError} = initTravel();
+ 
  
   const onDismiss = () => {
     navigate(-1);
@@ -150,8 +147,6 @@ export const AddTravelModal = () => {
         let income = []
         income = formData.categoryIncome.map(res => {return res.id})
         expense = formData.categoryExpense.map(res => {return res.id})
-        console.log(income)
-        console.log(expense)
         const postItem : CreateTravelProps = { month :  numberOfMonths , day : numberOfday, 
         week: numberOfWeek, destinationId: formData.destination.id , startDate : formData.startDate, endDate: formData.endDate,
         idAuth0 : user.sub, currencyId: formData.currency.id , budget : formData.budget, categoryExpenseId : expense, 

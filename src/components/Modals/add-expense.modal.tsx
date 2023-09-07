@@ -1,27 +1,30 @@
 
-import moment, { Moment } from "moment";
-import { useEffect, useRef, useState } from "react";
-import { PiCurrencyKrwBold } from 'react-icons/pi';
-import { Form, useLocation, useNavigate, useParams } from "react-router-dom";
-import { CreateEntryProps, FormDataExpenseProps } from "../../enums/types.enum";
-import { Currency } from "../../models/currency.model";
-import { CustomSearchableSelect } from "../custom-searchable-select";
-import { InputWithMoment } from "../input-with-moment";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import moment from "moment";
+import { useEffect, useRef, useState } from "react";
+import { PiCurrencyKrwBold } from 'react-icons/pi';
+import { Form, useLocation, useNavigate } from "react-router-dom";
+import { CreateEntryProps, FormDataExpenseProps } from "../../enums/types.enum";
+import { Currency } from "../../models/currency.model";
+import { CustomSearchableSelect } from "../ui/custom-searchable-select";
+import { InputWithMoment } from "../ui/input-with-moment";
+
 
 
 
 export const AddExpenseModal = () => {
+
   const navigate = useNavigate();
   const location = useLocation()
   const { categorieId, travelId } : {categorieId : number , travelId: number}= location.state
+  
   const [currency, setCurrencies] = useState<Currency[]>([]);
-  const [date, setDate] = useState<Moment>(moment());
-  const [globalError, setGlobalError] = useState("");
+
   let buttonRef = useRef<HTMLButtonElement>(null);
   let formRef = useRef<HTMLFormElement>(null);
   const { user } = useAuth0()
+  
   const onDismiss = () => {
     navigate(-1);
   }
@@ -41,7 +44,6 @@ export const AddExpenseModal = () => {
   });
 
   const handleDataChild = (e: any, name: string) => {
-    // Update the selected date as a string
     setFormData({
       ...formData,
       [name]: e,
@@ -50,7 +52,7 @@ export const AddExpenseModal = () => {
       ...errors,
       [name]: '',
     });
-    setGlobalError('')
+
   };
 
   useEffect(() => {
