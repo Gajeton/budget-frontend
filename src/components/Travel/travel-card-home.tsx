@@ -8,8 +8,8 @@ interface TravelCardHomeProps {
     startDate: Moment,
     endDate: Moment,
     id: number,
-    totalExpense: number,
-    totalIncome: number
+    totalExpense: string,
+    totalIncome: string
 }
 
 export const TravelCardHome = ({ destination, startDate, endDate, id, totalExpense, totalIncome }: TravelCardHomeProps) => {

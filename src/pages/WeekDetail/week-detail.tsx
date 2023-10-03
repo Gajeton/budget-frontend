@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import CardTitle from "../../components/CardTitle/card-title";
+import { GetTravelDetailByIdType } from "../../enums/types";
 
 
 function WeekDetail() {
 
-  const [data, setData] = useState<any>();;
+  const [data, setData] = useState<GetTravelDetailByIdType>();;
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
   const { user } = useAuth0()

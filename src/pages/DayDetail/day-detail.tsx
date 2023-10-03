@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
-import BudgetDetail from "../../components/BudgetDetail/budget-detail";
 import CardTitle from "../../components/CardTitle/card-title";
+import { BudgetDetail } from "../../components/BudgetDetail/budget-detail";
 
 export const DayDetail = () => {
 

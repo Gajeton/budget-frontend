@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import BudgetDetailIncomeItem from "./budget-detail-income-item";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { CategoryExpenseByTravelIdType, CategoryIncomeByTravelIdType } from "../../enums/types";
 import BudgetDetailExpenseItem from "./budget-detail-expense-item";
-import CardTitle from "../CardTitle/card-title";
+import BudgetDetailIncomeItem from "./budget-detail-income-item";
 
 
 export const BudgetDetail = () => {
-    const [categoryExpense, setCategoryExpense] = useState<any[]>([]);
-    const [categoryIncome, setCategoryIncome] = useState<any[]>([]);
+    const [categoryExpense, setCategoryExpense] = useState<CategoryExpenseByTravelIdType[]>([]);
+    const [categoryIncome, setCategoryIncome] = useState<CategoryIncomeByTravelIdType[]>([]);
     const [error, setError] = useState("");
     const [loaded, setLoaded] = useState(false);
     const { user } = useAuth0()
@@ -86,7 +86,7 @@ export const BudgetDetail = () => {
                             </thead>
                             <tbody className="bg-[#F6F4EB] divide-y divide-gray-200 text-black text-center">
                                 {categoryExpense.map(res => {
-                                    return <BudgetDetailExpenseItem travelId={travelId} categoryId={res.id} categoryName={res.categoryTitle} entrysAmount={res.entrysAmount} countEntrys={res.countEntry} />
+                                    return <BudgetDetailExpenseItem travelId={travelId} categoryId={res.id} categoryName={res.categoryTitle} entrysAmount={res.entrysAmount} countEntrys={res.countEntrys} />
                                 })
                                 }
                             </tbody>

@@ -12,7 +12,6 @@ export const AdminList = ({ data, handleDeleteFunction }: AdminListProps) => {
     <>
       <div className="bg-[#91C8E4] rounded-sm hover:bg-[#91C8E4] grid grid-cols-3 w-full">
         {formatDataList(data)}
-
       </div>
     </>
   );

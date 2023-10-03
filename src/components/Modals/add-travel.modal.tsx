@@ -7,6 +7,7 @@ import { CreateTravelProps, FormDataProps } from "../../enums/types.enum";
 import { CustomSearchableSelect } from "../ui/custom-searchable-select"; 
 import { Currency } from "../../models/currency.model";
 import { MultiSelectInput } from "../ui/multi-select-input";
+import { InputWithMoment } from "../ui/input-with-moment";
 
 export const AddTravelModal = () => {
 

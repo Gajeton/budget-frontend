@@ -5,7 +5,7 @@ import { AdminList } from "../AdminList/admin-list";
 import { AdminSkeleton } from "../admin-skeleton";
 
 export const AdminIncome = () => {
-  const [data, setData] = useState<any>(null);;
+  const [data, setData] = useState<CategoryIncome[]>();;
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
 
@@ -26,14 +26,14 @@ export const AdminIncome = () => {
   const handelDelete = (deleteId: number) => {
     axios
       .delete(import.meta.env.VITE_API_URL + "categoryIncome/deleteCategoryIncome/" + deleteId)
-      .then((response) => setData(data.filter((a: { id: any; }) =>
+      .then((response) => setData(data!.filter((a: { id: any; }) =>
         a.id !== response.data.id
       )))
       .catch((error) => setError(error.message))
       .finally(() => setLoaded(true));
   }
 
-  if (loaded) {
+  if (loaded && data) {
     return error ? (
       <span>Error: {error}</span>
     ) : (
