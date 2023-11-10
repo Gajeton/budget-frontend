@@ -55,7 +55,7 @@ export const AddIncomeModal = () => {
   useEffect(() => {
     if (user) {
         axios
-        .get(import.meta.env.VITE_API_URL + "currency/getCurrencies")
+        .get(import.meta.env.VITE_API_URL + "currencies")
         .then((response) => setCurrencies(response.data))
     }
   }, []);
@@ -107,7 +107,7 @@ export const AddIncomeModal = () => {
         const postItem : CreateEntryProps = { currencyId :  formData.currency.id , date : formData.date, 
         amount: formData.amount, idAuth0: user.sub, title: formData.title, categoryId : categorieId, travelId : travelId, categorieIncomeId : categorieId }
         axios
-        .post(import.meta.env.VITE_API_URL + 'entry/createEntry', postItem)
+        .post(import.meta.env.VITE_API_URL + 'entries/create_entries', postItem)
         .then((response) => console.log(response))
       }
   }

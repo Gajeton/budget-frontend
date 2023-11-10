@@ -14,7 +14,7 @@ export const AdminIncome = () => {
   useEffect(() => {
     if (user) {
     axios
-      .get(import.meta.env.VITE_API_URL + "categoryIncome/getCategoryIncomes/" + user.sub)
+      .get(import.meta.env.VITE_API_URL + "users/categories_income/" + user.sub)
       .then((response) => setData(response.data))
       .catch((error) => setError(error.message))
       .finally(() => setLoaded(true));
@@ -25,7 +25,7 @@ export const AdminIncome = () => {
 
   const handelDelete = (deleteId: number) => {
     axios
-      .delete(import.meta.env.VITE_API_URL + "categoryIncome/deleteCategoryIncome/" + deleteId)
+      .delete(import.meta.env.VITE_API_URL + "categoryIncomes/delete_category_income/" + deleteId)
       .then((response) => setData(data!.filter((a: { id: any; }) =>
         a.id !== response.data.id
       )))
@@ -42,7 +42,7 @@ export const AdminIncome = () => {
         <AdminSkeleton
           setData={setData}
           data={data}
-          url="categoryIncome/createCategoryIncome/"
+          url="categoryIncomes/create_category_income/"
           inputLabel="test"
           buttonLabel="Add an income category"
         />

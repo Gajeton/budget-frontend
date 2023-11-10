@@ -16,7 +16,7 @@ function Travel() {
   useEffect(() => {
   
     if (user) {
-      axios.get(import.meta.env.VITE_API_URL + "travel/getTravelById/" + id + "/" + user.sub)
+      axios.get(import.meta.env.VITE_API_URL + "travels/" + id)
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
         .finally(() => { setLoaded(true), console.log(data)});

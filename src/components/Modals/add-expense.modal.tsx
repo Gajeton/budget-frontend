@@ -58,7 +58,7 @@ export const AddExpenseModal = () => {
   useEffect(() => {
     if (user) {
         axios
-        .get(import.meta.env.VITE_API_URL + "currency/getCurrencies")
+        .get(import.meta.env.VITE_API_URL + "currencies")
         .then((response) => setCurrencies(response.data))
     }
   }, []);

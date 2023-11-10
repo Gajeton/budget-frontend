@@ -43,7 +43,7 @@ export const  Sidebar = () => {
 
   if(user) {
     axios
-    .post(import.meta.env.VITE_API_URL + "user/createUser/", { idAuth0 : user.sub , name : user.name})
+    .post(import.meta.env.VITE_API_URL + "users/create_user/", { idAuth0 : user.sub , name : user.name})
   }
 
   return (

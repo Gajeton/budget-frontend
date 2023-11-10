@@ -154,7 +154,7 @@ export const AddTravelModal = () => {
         categoryIncomeId : income}
         
         axios
-        .post(import.meta.env.VITE_API_URL + 'travel/createTravel', postItem)
+        .post(import.meta.env.VITE_API_URL + 'travels/create_travel', postItem)
         .then((response) => console.log(response))
       }
      
@@ -165,26 +165,26 @@ export const AddTravelModal = () => {
   useEffect(() => {
     if (user) {
         axios
-        .get(import.meta.env.VITE_API_URL + "destination/getDestinations/" + user.sub)
+        .get(import.meta.env.VITE_API_URL + "destinations" + user.sub)
         .then((response) => setDestinations(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));
 
         axios
-        .get(import.meta.env.VITE_API_URL + "categoryExpense/getCategoryExpenses/" + user.sub)
+        .get(import.meta.env.VITE_API_URL + "users/categories_expense/" + user.sub)
         .then((response) => setCategoryExpense(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));
 
         axios
-        .get(import.meta.env.VITE_API_URL + "categoryIncome/getCategoryIncomes/" + user.sub)
+        .get(import.meta.env.VITE_API_URL + "users/categories_income/" + user.sub)
         .then((response) => setCategoryIncome(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));
 
 
         axios
-        .get(import.meta.env.VITE_API_URL + "currency/getCurrencies")
+        .get(import.meta.env.VITE_API_URL + "currencies")
         .then((response) => setCurrencies(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));

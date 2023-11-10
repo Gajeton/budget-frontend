@@ -18,7 +18,7 @@ export const AdminExpense = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(import.meta.env.VITE_API_URL + "categoryExpense/getCategoryExpenses/" + user.sub)
+        .get(import.meta.env.VITE_API_URL + "users/categories_expense/" + user.sub)
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));
@@ -30,7 +30,7 @@ export const AdminExpense = () => {
 
   const handelDelete = (deleteId: number) => {
     axios
-      .delete(import.meta.env.VITE_API_URL + "categoryExpense/deleteCategoryExpense/" + deleteId)
+      .delete(import.meta.env.VITE_API_URL + "categoryExpenses/delete_category_expense/" + deleteId)
       .then((response) => setData(data!.filter((a: { id: any; }) =>
         a.id !== response.data.id
       )))
@@ -47,7 +47,7 @@ export const AdminExpense = () => {
         <AdminSkeleton
           setData={setData}
           data={data}
-          url="categoryExpense/createCategoryExpense/"
+          url="categoryExpenses/create_category_expense/"
           inputLabel="test"
           buttonLabel="Add an expense category"
         />

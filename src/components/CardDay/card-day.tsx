@@ -16,7 +16,7 @@ import CardDayItem from "./card-day-items";
 
   useEffect(() => {
     if (user) {
-      axios.get(import.meta.env.VITE_API_URL + "travel/getNumberOfDays/" + id + "/" + user.sub)
+      axios.get(import.meta.env.VITE_API_URL + "travels/getNumberOfDays/" + id + "/" + user.sub)
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));

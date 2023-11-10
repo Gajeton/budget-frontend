@@ -19,12 +19,12 @@ export const BudgetDetail = () => {
 
     useEffect(() => {
         if (user) {
-            axios.get(import.meta.env.VITE_API_URL + "travel/getCategoryIncomeByTravelId/" + travelId)
+            axios.get(import.meta.env.VITE_API_URL + "travels/category_income/" + travelId)
                 .then((response) => setCategoryIncome(response.data))
                 .catch((error) => setError(error.message))
                 .finally(() => setLoaded(true));
 
-            axios.get(import.meta.env.VITE_API_URL + "travel/getCategoryExpenseByTravelId/" + travelId)
+            axios.get(import.meta.env.VITE_API_URL + "travels/category_expense/" + travelId)
                 .then((response) => setCategoryExpense(response.data))
                 .catch((error) => setError(error.message))
                 .finally(() => setLoaded(true));

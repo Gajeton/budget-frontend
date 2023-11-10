@@ -21,7 +21,7 @@ function Home() {
 
   useEffect(() => {
     if (user) {
-      axios.get(import.meta.env.VITE_API_URL + "travel/getTravels/" + user.sub)
+      axios.get(import.meta.env.VITE_API_URL + "travels")
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));
@@ -70,8 +70,7 @@ function Home() {
     <AiOutlinePlus size={50} />
   </Link>
   <Outlet />
-    <span>Loading...</span></>;
-
+  <span>Loading...</span></>;
 }
 
 export default Home

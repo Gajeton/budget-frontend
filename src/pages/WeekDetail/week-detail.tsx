@@ -16,7 +16,7 @@ function WeekDetail() {
   const {id} = useParams()
   useEffect(() => {
     if (user) {
-      axios.get(import.meta.env.VITE_API_URL + "travel/getTravelDetailById/" + id )
+      axios.get(import.meta.env.VITE_API_URL + "travels/travel_detail/" + id )
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
         .finally(() => { setLoaded(true), console.log(data)});

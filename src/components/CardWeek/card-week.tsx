@@ -22,7 +22,7 @@ export const CardWeek = () => {
 
   useEffect(() => {
     if (user) {
-      axios.get(import.meta.env.VITE_API_URL + "travel/getNumberOfWeeks/" + id + "/" + user.sub)
+      axios.get(import.meta.env.VITE_API_URL + "travels/number_of_weeks/" + id + "/" + user.sub)
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));

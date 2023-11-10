@@ -15,7 +15,7 @@ export const AdminDestination = () => {
   useEffect(() => {
 
     if (user) {
-      axios.get(import.meta.env.VITE_API_URL + "destination/getDestinations/" + user.sub)
+      axios.get(import.meta.env.VITE_API_URL + "users/destinations/" + user.sub)
         .then((response) => setData(response.data))
         .catch((error) => setError(error.message))
         .finally(() => setLoaded(true));
@@ -25,7 +25,7 @@ export const AdminDestination = () => {
 
   const handelDelete = (deleteId: number) => {
     axios
-      .delete(import.meta.env.VITE_API_URL + "destination/deleteDestination/" + deleteId)
+      .delete(import.meta.env.VITE_API_URL + "destinations/delete_destination/" + deleteId)
       .then((response) => setData(data.filter((a: { id: any; }) =>
         a.id !== response.data.id
       )))
@@ -42,7 +42,7 @@ export const AdminDestination = () => {
         <AdminSkeleton
           setData={setData}
           data={data}
-          url="destination/createDestination/"
+          url="destinations/create_destination/"
           inputLabel="test"
           buttonLabel="Add a destination"
         />
